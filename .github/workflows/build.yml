@@ -49,7 +49,6 @@ jobs:
             index.html
           flatpak-builder-args: |
             --install-deps-from=flathub
-            --default-branch=stable
 
   deploy:
     name: Deploy to GitHub Pages

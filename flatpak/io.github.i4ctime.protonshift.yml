@@ -15,6 +15,7 @@
 #   flatpak run org.flatpak.Builder --user --install --force-clean \
 #     build-dir flatpak/flathub/io.github.i4ctime.protonshift.yml
 app-id: io.github.i4ctime.protonshift
+default-branch: stable
 runtime: org.kde.Platform
 runtime-version: "6.11"
 sdk: org.kde.Sdk
