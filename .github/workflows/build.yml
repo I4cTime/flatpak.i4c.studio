@@ -1,0 +1,67 @@
+name: Build & publish Flatpak repo
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "flatpak/**"
+      - ".github/workflows/build.yml"
+      - "index.html"
+      - "CNAME"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      # KDE-runtime flatter image; exact runtime versions the manifests need
+      # are pulled at build time via --install-deps-from=flathub.
+      image: ghcr.io/andyholmes/flatter/kde:6.10
+      options: --privileged
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Ensure flathub remote
+        run: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+      - name: Setup GPG
+        id: gpg
+        uses: crazy-max/ghaction-import-gpg@v7
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Build
+        uses: andyholmes/flatter@v1
+        with:
+          files: |
+            flatpak/io.github.i4ctime.protonshift.yml
+          gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
+          upload-bundles: true
+          upload-pages-artifact: true
+          upload-pages-includes: |
+            CNAME
+            index.html
+          flatpak-builder-args: |
+            --install-deps-from=flathub
+            --default-branch=stable
+
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

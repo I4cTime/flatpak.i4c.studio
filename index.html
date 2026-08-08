@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I4C Flatpak Repository</title>
+<meta name="description" content="Signed Flatpak repository for I4C Studio apps — add once, update forever.">
+<style>
+  :root {
+    --bg: #0a0a14;
+    --panel: #11121f;
+    --border: #232538;
+    --text: #e8e9f2;
+    --muted: #8b8fa8;
+    --violet: #a78bfa;
+    --magenta: #f472b6;
+    --cyan: #67e8f9;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 1.25rem 3rem;
+  }
+  main { width: 100%; max-width: 44rem; }
+  h1 {
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--violet), var(--magenta), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+  .tag { color: var(--muted); margin: 0.5rem 0 2.5rem; }
+  h2 { font-size: 1.05rem; margin: 2.25rem 0 0.75rem; color: var(--violet); }
+  pre {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    overflow-x: auto;
+    font: 0.85rem/1.5 ui-monospace, "JetBrains Mono", monospace;
+    color: var(--cyan);
+  }
+  .app {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    margin-top: 0.75rem;
+  }
+  .app b { color: var(--text); }
+  .app .id { font: 0.8rem ui-monospace, monospace; color: var(--muted); }
+  .app p { color: var(--muted); font-size: 0.92rem; margin-top: 0.35rem; }
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  footer { margin-top: 3.5rem; color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>I4C Flatpak Repository</h1>
+  <p class="tag">Signed builds of I4C Studio desktop apps. Add the remote once — updates arrive with <code>flatpak update</code> like everywhere else.</p>
+
+  <h2>Add the repository</h2>
+  <pre>flatpak remote-add --user --if-not-exists i4c https://flatpak.i4c.studio/index.flatpakrepo</pre>
+
+  <h2>Apps</h2>
+  <div class="app">
+    <b>ProtonShift</b> <span class="id">io.github.i4ctime.protonshift</span>
+    <p>Configure Proton, gamescope, MangoHud and your Steam library — desktop and Steam Deck.</p>
+    <pre>flatpak install i4c io.github.i4ctime.protonshift</pre>
+    <p><a href="https://github.com/I4cTime/protonshift">Source</a> · <a href="https://protonshift.i4c.studio">Website</a></p>
+  </div>
+
+  <h2>Trust</h2>
+  <p style="color:var(--muted); font-size:0.92rem">
+    Every build is compiled from a pinned, tagged commit of the public source
+    repository by <a href="https://github.com/I4cTime/flatpak.i4c.studio">GitHub Actions</a>
+    and GPG-signed. The <code>.flatpakrepo</code> file carries the public key.
+  </p>
+
+  <footer>
+    <a href="https://i4c.studio">I4C Studio</a> · manifests on <a href="https://github.com/I4cTime/flatpak.i4c.studio">GitHub</a>
+  </footer>
+</main>
+</body>
+</html>
