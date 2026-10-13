@@ -27,8 +27,11 @@ Updates then arrive through `flatpak update` like any other remote.
 
 ## Releasing an app update
 
-1. Bump the `commit:` pin in the app's manifest under `flatpak/` to the
-   new release commit.
+1. Re-copy the app's Flathub manifest from its release commit (for
+   ProtonShift, `flatpak/flathub/io.github.i4ctime.protonshift.yml`, keeping
+   `default-branch: stable`), so new permissions arrive with the code that
+   needs them, and check its `commit:` pin is the release commit. Bumping
+   only `commit:` ships new code with old permissions.
 2. Push to `main` — the workflow rebuilds and republishes the repo.
 
 ## Adding an app
